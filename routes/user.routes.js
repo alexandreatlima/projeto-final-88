@@ -33,6 +33,7 @@ userRouter.post("/signup", async (req, res) => {
     const createdUser = await UserModel.create({
       ...req.body,
       passwordHash: hashedPassword,
+      role: "USER",
     });
 
     delete createdUser._doc.passwordHash;
