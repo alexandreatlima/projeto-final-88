@@ -27,9 +27,6 @@ userRouter.post("/signup", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    console.log(`SALT = ${salt}`);
-    console.log(`SENHA HASHEADA = ${hashedPassword}`);
-
     const createdUser = await UserModel.create({
       ...req.body,
       passwordHash: hashedPassword,
