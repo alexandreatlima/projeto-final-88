@@ -29,4 +29,66 @@ productRouter.post(
   }
 );
 
+productRouter.get("/", async (req, res) => {
+  try {
+    const products = await ProductModel.find({});
+
+    return res.status(200).json(products);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+
+productRouter.get("/:productId", async (req, res) => {
+  try {
+    const product = await ProductModel.findOne({ _id: req.params.productId });
+
+    return res.status(200).json(product);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+
+productRouter.put(
+  "/:productId",
+  isAuth,
+  attachCurrentUser,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const updatedProduct = await ProductModel.findOneAndUpdate(
+        { _id: req.params.productId },
+        { ...req.body },
+        { new: true, runValidators: true }
+      );
+
+      return res.status(200).json(updatedProduct);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+  }
+);
+
+productRouter.delete(
+  "/:productId",
+  isAuth,
+  attachCurrentUser,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const deletedProduct = await ProductModel.deleteOne({
+        _id: req.params.productId,
+      });
+
+      return res.status(200).json(deletedProduct);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+  }
+);
+
 export { productRouter };
