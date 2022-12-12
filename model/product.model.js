@@ -8,6 +8,7 @@ const productSchema = new Schema({
   createdAt: { type: Date, default: new Date(Date.now()) },
   creator: { type: Types.ObjectId, ref: "User" },
   orders: [{ type: Types.ObjectId, ref: "Order" }],
+  img: { type: String },
 });
 
 export const ProductModel = model("Product", productSchema);
