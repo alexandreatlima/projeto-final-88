@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 dbConnection();
 
-app.use(cors());
+app.use(cors({ origin: process.env.REACT_APP_URL }));
 app.use(express.json());
 
 app.use("/user", userRouter);
